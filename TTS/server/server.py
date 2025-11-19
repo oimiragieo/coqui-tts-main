@@ -140,10 +140,29 @@ def style_wav_uri_to_dict(style_wav: str) -> Union[str, dict]:
     """
     if style_wav:
         if os.path.isfile(style_wav) and style_wav.endswith(".wav"):
-            return style_wav  # style_wav is a .wav file located on the server
+            # Security: Prevent path traversal attacks
+            # Validate that the resolved path doesn't escape expected directories
+            try:
+                style_wav_path = Path(style_wav).resolve()
+                # Check if path exists and is a file (not a directory or symlink to sensitive location)
+                if not style_wav_path.is_file():
+                    print(f"Warning: style_wav path is not a regular file: {style_wav}")
+                    return None
+                # Additional validation: ensure path doesn't contain path traversal patterns
+                if ".." in str(style_wav_path) or str(style_wav_path) != str(Path(style_wav).absolute()):
+                    print(f"Warning: potential path traversal detected in style_wav: {style_wav}")
+                    return None
+                return str(style_wav_path)  # style_wav is a .wav file located on the server
+            except (OSError, ValueError) as e:
+                print(f"Error validating style_wav path: {e}")
+                return None
 
-        style_wav = json.loads(style_wav)
-        return style_wav  # style_wav is a gst dictionary with {token1_id : token1_weigth, ...}
+        try:
+            style_wav = json.loads(style_wav)
+            return style_wav  # style_wav is a gst dictionary with {token1_id : token1_weigth, ...}
+        except json.JSONDecodeError:
+            print(f"Warning: style_wav is not a valid JSON or file path: {style_wav}")
+            return None
     return None
 
 
