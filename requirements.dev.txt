@@ -1,5 +1,40 @@
-black
-coverage
-isort
-nose2
-pylint==2.10.2
+# Code formatting and linting
+black>=24.0.0
+isort>=5.13.0
+ruff>=0.3.0
+flake8>=7.0.0
+flake8-bugbear>=24.0.0
+flake8-comprehensions>=3.14.0
+flake8-simplify>=0.21.0
+
+# Type checking
+mypy>=1.9.0
+types-PyYAML
+types-requests
+types-setuptools
+
+# Testing
+pytest>=7.4.0
+pytest-cov>=4.1.0
+pytest-xdist>=3.5.0  # Parallel test execution
+pytest-timeout>=2.2.0
+pytest-mock>=3.12.0
+coverage[toml]>=7.4.0
+
+# Development tools
+pre-commit>=3.6.0
+ipython>=8.20.0
+ipdb>=0.13.13
+
+# Documentation
+sphinx>=7.2.0
+sphinx-rtd-theme>=2.0.0
+sphinx-autodoc-typehints>=2.0.0
+
+# Performance profiling
+py-spy>=0.3.14
+memory-profiler>=0.61.0
+
+# Deprecated: kept for backward compatibility, will be removed
+# nose2  # Replaced by pytest
+# pylint==2.10.2  # Replaced by ruff
