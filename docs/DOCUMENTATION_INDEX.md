@@ -292,15 +292,21 @@ When adding/updating documentation:
 ## Version Information
 
 - **Documentation Created**: November 19, 2025
-- **Coqui TTS Version**: Latest (2 years old, actively maintained)
+- **Last Updated**: November 20, 2025
+- **Coqui TTS Version**: 0.22.0+ (actively maintained)
+- **Latest Feature**: VoiceCraft-X multilingual TTS and speech editing
 - **Python Support**: 3.9, 3.10, 3.11
-- **PyTorch**: 2.1+
-- **Total Documentation Pages**: 3 comprehensive guides + this index
-- **Total Lines**: 2131 lines of documentation
+- **PyTorch**: 2.0+
+- **Total Documentation Pages**: 5 comprehensive guides + this index
+- **Total Lines**: 2500+ lines of documentation
 
 ---
 
 ## Additional Documentation Files
+
+### Model Documentation
+- **docs/models/voicecraft_x.md** - VoiceCraft-X: Multilingual TTS and speech editing guide
+- **docs/models/voicecraft_x_implementation.md** - VoiceCraft-X implementation details and architecture
 
 ### Development Guides
 - **docs/development/MIGRATION_GUIDE.md** - Guide for migrating to modernized codebase
@@ -327,5 +333,5 @@ When adding/updating documentation:
 
 ---
 
-**Last Updated**: November 19, 2025
+**Last Updated**: November 20, 2025
 **Maintained by**: Architecture Documentation Task
