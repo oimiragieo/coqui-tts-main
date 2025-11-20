@@ -65,6 +65,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Created Migration Guide for upgrading
 - Added comprehensive docstrings coverage (97.8%)
 - Added VoiceCraft-X model documentation and examples
+- Added comprehensive "Getting Started" guide with step-by-step instructions
+- Added Table of Contents to README for easier navigation
+- Documented 4 common use cases with code examples
 
 ## [0.22.0] - 2023-XX-XX
 

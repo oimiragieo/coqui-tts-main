@@ -38,6 +38,19 @@
 🛠️ Tools for training new models and fine-tuning existing models in any language.
 
 📚 Utilities for dataset analysis and curation.
+
+______________________________________________________________________
+
+## 📋 Table of Contents
+
+- [🚀 Getting Started](#-getting-started---step-by-step) - **Start here if you're new!**
+- [Installation](#installation)
+- [Model Implementations](#model-implementations)
+- [Usage Examples](#synthesizing-speech-by-tts)
+- [Project Structure](#-project-structure)
+- [Documentation](#-documentation--resources)
+- [Contributing](#-contributing)
+
 ______________________________________________________________________
 
 [![Discord](https://img.shields.io/discord/1037326658807533628?color=%239B59B6&label=chat%20on%20discord)](https://discord.gg/5eXr5seRrv)
@@ -220,6 +233,189 @@ tts.synthesizer.tts_model = maybe_compile(tts.synthesizer.tts_model)
 
 See the [Migration Guide](docs/development/MIGRATION_GUIDE.md) for more details.
 
+---
+
+## 🚀 Getting Started - Step by Step
+
+New to Coqui TTS? Follow these simple steps to get up and running!
+
+### Step 1: Install Coqui TTS
+
+**For most users (inference only):**
+```bash
+pip install TTS
+```
+
+**For advanced users (development/training):**
+```bash
+git clone https://github.com/coqui-ai/TTS
+cd TTS
+pip install -e ".[all,dev,notebooks]"
+```
+
+### Step 2: Choose Your Use Case
+
+#### 🎤 Use Case A: Simple Text-to-Speech (Easiest)
+
+Generate speech from text using a pre-trained English model:
+
+```bash
+# Command-line (simplest)
+tts --text "Hello world! This is Coqui TTS." --out_path output.wav
+
+# The model will download automatically on first run
+```
+
+**Python API:**
+```python
+from TTS.api import TTS
+
+# Initialize TTS (downloads model on first run)
+tts = TTS(model_name="tts_models/en/ljspeech/tacotron2-DDC")
+
+# Generate speech
+tts.tts_to_file(text="Hello world!", file_path="output.wav")
+```
+
+#### 🌍 Use Case B: Multilingual Text-to-Speech
+
+Speak in multiple languages with voice cloning:
+
+```python
+from TTS.api import TTS
+
+# Initialize XTTS v2 (supports 16 languages)
+tts = TTS("tts_models/multilingual/multi-dataset/xtts_v2").to("cuda")
+
+# Clone a voice and speak in English
+tts.tts_to_file(
+    text="Hello, this is voice cloning!",
+    speaker_wav="path/to/your/voice_sample.wav",
+    language="en",
+    file_path="output.wav"
+)
+
+# Same voice, different language
+tts.tts_to_file(
+    text="Hola, esto es clonación de voz!",
+    speaker_wav="path/to/your/voice_sample.wav",
+    language="es",
+    file_path="output_spanish.wav"
+)
+```
+
+#### ✨ Use Case C: VoiceCraft-X - Speech Editing (NEW!)
+
+Edit existing audio or generate speech in 11+ languages:
+
+```python
+from TTS.tts.models.voicecraft_x import VoiceCraftX, VoiceCraftXConfig
+import torch
+
+# Initialize VoiceCraft-X
+config = VoiceCraftXConfig(num_codebooks=4, codebook_size=2048)
+model = VoiceCraftX(config)
+
+# Generate speech with voice cloning
+prompt_audio = torch.randn(1, 16000 * 3)  # Load your audio here
+output = model.inference_tts(
+    text="Hello from VoiceCraft-X!",
+    prompt_audio=prompt_audio,
+    temperature=1.0,
+    top_k=20
+)
+
+# See examples/voicecraft_x_example.py for more details
+```
+
+#### 🎨 Use Case D: Voice Conversion
+
+Convert one voice to sound like another:
+
+```python
+from TTS.api import TTS
+
+# Initialize voice conversion model
+tts = TTS(model_name="voice_conversion_models/multilingual/vctk/freevc24")
+
+# Convert source voice to target voice
+tts.voice_conversion_to_file(
+    source_wav="my_voice.wav",
+    target_wav="target_voice.wav",
+    file_path="converted_output.wav"
+)
+```
+
+### Step 3: Explore Available Models
+
+List all available pre-trained models:
+
+```bash
+tts --list_models
+```
+
+**Popular Models:**
+- `tts_models/en/ljspeech/tacotron2-DDC` - Fast English TTS
+- `tts_models/en/ljspeech/vits` - High-quality English TTS
+- `tts_models/multilingual/multi-dataset/xtts_v2` - 16 languages + voice cloning
+- `tts_models/multilingual/multi-dataset/your_tts` - Multilingual voice cloning
+- `tts_models/en/ljspeech/fast_pitch` - Fast synthesis
+
+### Step 4: Use the Server (Optional)
+
+Run TTS as a web service:
+
+```bash
+# Start the server
+tts-server --model_name tts_models/en/ljspeech/tacotron2-DDC
+
+# Access at http://localhost:5002
+```
+
+Or with Docker:
+
+```bash
+docker run --rm -it -p 5002:5002 --entrypoint /bin/bash ghcr.io/coqui-ai/tts-cpu
+python3 TTS/server/server.py --model_name tts_models/en/vctk/vits
+```
+
+### Step 5: Next Steps
+
+**For Users:**
+- 📖 Read the [Quick Reference Guide](docs/architecture/QUICK_REFERENCE.md)
+- 🎯 Check [examples/](examples/) for more code samples
+- 💬 Join [Discord](https://discord.gg/5eXr5seRrv) for help
+
+**For Developers:**
+- 🔧 Read [CONTRIBUTING.md](CONTRIBUTING.md)
+- 🏗️ See [Architecture Overview](docs/architecture/ARCHITECTURAL_OVERVIEW.md)
+- 🧪 Run tests: `pytest tests/`
+
+**For Training Custom Models:**
+- 📚 See [training recipes](recipes/)
+- 📖 Read [training guide](docs/source/training_a_model.md)
+- 🎓 Check [tutorial for beginners](docs/source/tutorial_for_nervous_beginners.md)
+
+---
+
+### 💡 Quick Tips
+
+**Troubleshooting:**
+- First run downloads models (~100MB-1GB) - be patient!
+- GPU recommended for large models (XTTS, VoiceCraft-X)
+- Use `--use_cuda` flag or `.to("cuda")` for GPU acceleration
+
+**Performance:**
+- Use PyTorch 2.0+ for 20-40% speedup with `torch.compile()`
+- Smaller models (Tacotron2, FastPitch) work fine on CPU
+- For production: cache model downloads, use GPU, enable compile mode
+
+**Common Issues:**
+- `espeak` not found: Install espeak (`apt-get install espeak` or `brew install espeak`)
+- CUDA out of memory: Reduce batch size or use CPU
+- Model download fails: Check internet connection or download manually
+
+---
 
 ## Docker Image
 You can also try TTS without install with the docker image.
