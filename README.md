@@ -1,20 +1,29 @@
 
 ## 🐸 Coqui.ai News
 
-### 🆕 Latest Updates (2025)
-- ✅ **Modernized Codebase**: PyTorch 2.0+ optimizations, comprehensive type hints, modern tooling
-- ✅ **Security Hardened**: Security vulnerabilities addressed, dependencies updated
-- ✅ **Improved Documentation**: Reorganized with comprehensive guides and examples
-- ✅ **Better Performance**: `torch.compile()` support for 20-40% faster inference
-- ✅ **Modern Testing**: Migrated to pytest with better coverage and parallel execution
+### 🆕 Latest Updates (November 2025)
 
-### 🎙️ Model Highlights
-- 📣 **ⓍTTSv2** is here with 16 languages and better performance across the board
-- 📣 **ⓍTTS fine-tuning** code is available - check the [example recipes](https://github.com/coqui-ai/TTS/tree/dev/recipes/ljspeech)
-- 📣 **ⓍTTS streaming** with <200ms latency [Docs](https://tts.readthedocs.io/en/dev/models/xtts.html)
-- 📣 **🐶 Bark** for emotional speech and unconstrained voice cloning [Docs](https://tts.readthedocs.io/en/dev/models/bark.html)
-- 📣 **~1100 languages** supported via [Fairseq models](https://github.com/facebookresearch/fairseq/tree/main/examples/mms)
-- 📣 **🐢 Tortoise** with faster inference [Docs](https://tts.readthedocs.io/en/dev/models/tortoise.html)
+#### **NEW: VoiceCraft-X - Next Generation Multilingual TTS** 🚀
+- ✨ **Unified TTS + Speech Editing**: Single model for both text-to-speech AND seamless audio editing
+- 🌍 **True Multilingual**: 11+ languages without phoneme conversion (powered by Qwen3 LLM)
+- 🎯 **State-of-the-Art Quality**: EnCodec-style 4-codebook architecture with 50Hz temporal resolution
+- ⚡ **Zero-Shot Voice Cloning**: Advanced speaker embeddings with CAM++ voiceprint model
+- 📝 **See the [VoiceCraft-X Guide](docs/models/voicecraft_x.md)** for details and implementation
+
+#### Modernization & Performance
+- ✅ **PyTorch 2.0+**: `torch.compile()` support for 20-40% faster inference
+- ✅ **Type Safety**: Comprehensive type hints throughout the codebase
+- ✅ **Security Hardened**: Vulnerabilities addressed, dependencies updated
+- ✅ **Modern Testing**: Migrated to pytest with better coverage and parallel execution
+- ✅ **Improved Documentation**: Reorganized with comprehensive guides and examples
+
+### 🎙️ Available TTS Models
+- 🆕 **VoiceCraft-X**: Multilingual TTS + speech editing (11+ languages) [Docs](docs/models/voicecraft_x.md)
+- 📣 **ⓍTTSv2**: 16 languages, voice cloning, streaming <200ms [Docs](https://tts.readthedocs.io/en/dev/models/xtts.html)
+- 📣 **🐶 Bark**: Emotional speech, unconstrained voice cloning [Docs](https://tts.readthedocs.io/en/dev/models/bark.html)
+- 📣 **🐢 Tortoise**: High-quality, slower inference [Docs](https://tts.readthedocs.io/en/dev/models/tortoise.html)
+- 📣 **VITS**: Fast end-to-end synthesis with multi-speaker support
+- 📣 **~1100 languages**: Via [Fairseq models](https://github.com/facebookresearch/fairseq/tree/main/examples/mms)
 
 <div align="center">
 <img src="https://static.scarf.sh/a.png?x-pxid=cf317fe7-2188-4721-bc01-124bb5d5dbb2" />
@@ -118,6 +127,7 @@ Underlined "TTS*" and "Judy*" are **internal** 🐸TTS models that are not relea
 - Delightful TTS: [paper](https://arxiv.org/abs/2110.12612)
 
 ### End-to-End Models
+- **VoiceCraft-X**: [paper](https://arxiv.org/abs/2511.12347) [docs](docs/models/voicecraft_x.md) ⭐ NEW
 - ⓍTTS: [blog](https://coqui.ai/blog/tts/open_xtts)
 - VITS: [paper](https://arxiv.org/pdf/2106.06103)
 - 🐸 YourTTS: [paper](https://arxiv.org/abs/2112.02418)
@@ -555,4 +565,4 @@ This project is licensed under the Mozilla Public License 2.0 (MPL-2.0). See [LI
 
 ---
 
-**Last Updated**: November 19, 2025 | **Version**: 0.22.0+ | **Status**: Actively Maintained
+**Last Updated**: November 20, 2025 | **Version**: 0.22.0+ | **Status**: Actively Maintained

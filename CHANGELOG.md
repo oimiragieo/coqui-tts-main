@@ -7,11 +7,35 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
-### Added
+### Added - November 20, 2025
+
+#### VoiceCraft-X: Next-Generation Multilingual TTS
+- **NEW MODEL**: VoiceCraft-X implementation with multilingual TTS and speech editing
+  - 11+ languages without phoneme conversion (powered by Qwen3 LLM)
+  - EnCodec-style 4-codebook architecture with 50Hz temporal resolution
+  - Unified framework for both TTS and speech editing
+  - Advanced speaker embeddings with CAM++ voiceprint model
+  - Zero-shot voice cloning capabilities
+- VoiceCraft-X components (`TTS/tts/layers/xtts/`):
+  - `encodec_tokenizer.py` - Multi-codebook speech tokenizer (4×2048 RVQ)
+  - `delay_pattern.py` - MusicGen-style delay pattern for coherent prediction
+  - `token_reordering.py` - Prefix-suffix-middle reordering strategy
+  - `qwen3_backbone.py` - Qwen3 LLM integration for 119 languages
+  - `speaker_embedding.py` - Enhanced CAM++ speaker encoder
+  - `voicecraft_x_loss.py` - Weighted loss function with codebook weighting
+- VoiceCraft-X model (`TTS/tts/models/voicecraft_x.py`) with inference methods
+- Example script: `examples/voicecraft_x_example.py` with TTS and editing demos
+- Test suite: `tests/test_voicecraft_x.py` for all VoiceCraft-X components
+- Comprehensive documentation:
+  - `docs/models/voicecraft_x.md` - User guide and API reference
+  - `docs/models/voicecraft_x_implementation.md` - Technical architecture details
+
+#### Documentation Improvements - November 19-20, 2025
 - Comprehensive documentation structure with organized directories:
   - `docs/architecture/` for architectural documentation
   - `docs/development/` for development guides and roadmaps
   - `docs/audit/` for security audit reports
+  - `docs/models/` for model-specific documentation
 - Modern CONTRIBUTING.md guide for contributors
 - CHANGELOG.md for tracking project changes
 - Documentation index (docs/DOCUMENTATION_INDEX.md) for easy navigation
@@ -21,7 +45,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Changed
 - Reorganized documentation files from root to organized subdirectories
-- Updated README.md to reflect modern project state
+- Moved VoiceCraft-X documentation to `docs/models/` for better organization
+- Moved VoiceCraft-X tests to `tests/` directory
+- Updated README.md to prominently feature VoiceCraft-X and modern capabilities
+- Updated documentation index to include VoiceCraft-X resources
 - Migrated testing framework from nose2 to pytest
 - Modernized development tooling (ruff, mypy, updated pre-commit hooks)
 - Updated dependencies for security and compatibility
@@ -37,6 +64,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Created Modernization Roadmap for future improvements
 - Created Migration Guide for upgrading
 - Added comprehensive docstrings coverage (97.8%)
+- Added VoiceCraft-X model documentation and examples
 
 ## [0.22.0] - 2023-XX-XX
 
@@ -100,4 +128,4 @@ We use [Semantic Versioning](https://semver.org/):
 
 **Note**: This CHANGELOG tracks significant changes. For detailed commit history, see the [GitHub commits](https://github.com/coqui-ai/TTS/commits/).
 
-**Last Updated**: November 19, 2025
+**Last Updated**: November 20, 2025
