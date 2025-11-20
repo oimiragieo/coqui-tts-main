@@ -59,9 +59,19 @@ class Qwen3Backbone(nn.Module):
             trust_remote_code=True,
         )
 
-        # Add special tokens
+        # Add special tokens for model control and speech events
         special_tokens = {
-            'additional_special_tokens': ['<MASK>', '<SPK>', '<AUD>']
+            'additional_special_tokens': [
+                '<MASK>',      # Mask token for reordering
+                '<SPK>',       # Speaker embedding marker
+                '<AUD>',       # Audio token marker
+                '[breath]',    # Breathing sound
+                '[noise]',     # Background noise
+                '[laughter]',  # Laughter
+                '[cough]',     # Coughing
+                '[sigh]',      # Sighing
+                '[pause]',     # Pause marker
+            ]
         }
         self.tokenizer.add_special_tokens(special_tokens)
 
@@ -69,6 +79,14 @@ class Qwen3Backbone(nn.Module):
         self.mask_token_id = self.tokenizer.convert_tokens_to_ids('<MASK>')
         self.speaker_token_id = self.tokenizer.convert_tokens_to_ids('<SPK>')
         self.audio_token_id = self.tokenizer.convert_tokens_to_ids('<AUD>')
+
+        # Speech event token IDs (for natural prosody control)
+        self.breath_token_id = self.tokenizer.convert_tokens_to_ids('[breath]')
+        self.noise_token_id = self.tokenizer.convert_tokens_to_ids('[noise]')
+        self.laughter_token_id = self.tokenizer.convert_tokens_to_ids('[laughter]')
+        self.cough_token_id = self.tokenizer.convert_tokens_to_ids('[cough]')
+        self.sigh_token_id = self.tokenizer.convert_tokens_to_ids('[sigh]')
+        self.pause_token_id = self.tokenizer.convert_tokens_to_ids('[pause]')
 
         # Load Qwen3 model
         try:
@@ -304,6 +322,8 @@ class Qwen3Backbone(nn.Module):
         temperature: float = 1.0,
         top_k: int = 20,
         top_p: float = 1.0,
+        min_p: float = 0.0,
+        repetition_penalty: float = 1.0,
         use_cache: bool = True,
     ) -> torch.Tensor:
         """Autoregressive generation of audio tokens.
@@ -314,8 +334,10 @@ class Qwen3Backbone(nn.Module):
             speaker_embedding: Speaker embedding [B, D_spk]
             max_new_tokens: Maximum tokens to generate
             temperature: Sampling temperature
-            top_k: Top-k sampling
-            top_p: Nucleus sampling threshold
+            top_k: Top-k sampling (default: 20, set to 0 to disable)
+            top_p: Nucleus sampling threshold (default: 1.0, set to 1.0 to disable)
+            min_p: Minimum probability threshold relative to max prob (default: 0.0 to disable)
+            repetition_penalty: Penalty for repeating tokens (default: 1.0 for no penalty)
             use_cache: Use KV caching for efficiency
 
         Returns:
@@ -361,7 +383,22 @@ class Qwen3Backbone(nn.Module):
             next_tokens = []
             for k in range(self.num_codebooks):
                 # Get logits for last position
-                logits_k = logits[k][:, -1, :] / temperature  # [B, codebook_size]
+                logits_k = logits[k][:, -1, :].clone()  # [B, codebook_size]
+
+                # Apply repetition penalty
+                if repetition_penalty != 1.0 and generated.shape[2] > 0:
+                    # Get unique tokens generated so far for this codebook
+                    for b in range(B):
+                        prev_tokens = generated[b, k, :].unique()
+                        for token_id in prev_tokens:
+                            # If score < 0, multiply by penalty, else divide
+                            if logits_k[b, token_id] < 0:
+                                logits_k[b, token_id] *= repetition_penalty
+                            else:
+                                logits_k[b, token_id] /= repetition_penalty
+
+                # Apply temperature
+                logits_k = logits_k / temperature
 
                 # Apply top-k filtering
                 if top_k > 0:
@@ -381,6 +418,14 @@ class Qwen3Backbone(nn.Module):
                     indices_to_remove = sorted_indices_to_remove.scatter(
                         1, sorted_indices, sorted_indices_to_remove
                     )
+                    logits_k[indices_to_remove] = float('-inf')
+
+                # Apply min-p filtering (alternative to top-p)
+                if min_p > 0.0:
+                    probs_before_filter = torch.softmax(logits_k, dim=-1)
+                    max_prob = probs_before_filter.max(dim=-1, keepdim=True)[0]
+                    min_prob_threshold = max_prob * min_p
+                    indices_to_remove = probs_before_filter < min_prob_threshold
                     logits_k[indices_to_remove] = float('-inf')
 
                 # Sample
