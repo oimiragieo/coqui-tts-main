@@ -157,20 +157,94 @@ where:
 | **Capabilities** | TTS only | TTS + Editing | Unified framework |
 | **Training Stability** | Repetition issues | Reordering eliminates loops | Stable single-pass generation |
 
+### 7. Alignment Utilities (`align_utils.py`) ✨ **NEW**
+
+**What it does:**
+- Provides sophisticated text alignment for speech editing
+- Detects common prefix/suffix between prompt and target text
+- Maps text positions to audio frame boundaries
+
+**Key functions:**
+- `get_diff_time_frame_and_segment()`: Find editing boundaries
+- `build_mapping()`: Map cleaned text to original positions
+- `remove_punctuation()`: Unicode-aware punctuation handling
+- Language-aware processing (word-based vs character-based)
+
+**Benefits:**
+- Precise speech editing with exact boundary detection
+- Handles both word-based (English, etc.) and character-based (Chinese, Japanese) languages
+- Essential for high-quality speech editing
+
+### 8. Text Preprocessing Pipeline (`text_processor.py`) ✨ **NEW**
+
+**What it does:**
+- Normalizes text before tokenization
+- Converts numbers to words
+- Splits long texts into manageable segments
+
+**Features:**
+- `spell_out_number()`: Digit to word conversion
+- `split_paragraph()`: Intelligent text segmentation
+- `TextPreprocessor`: All-in-one preprocessing class
+- Multi-language support
+
+**Benefits:**
+- Consistent text formatting across languages
+- Improved number pronunciation
+- Handles long documents efficiently
+
+### 9. Enhanced Sampling with Repetition Penalty ✨ **NEW**
+
+**What it does:**
+- Adds repetition_penalty parameter to reduce repetition loops
+- Implements min-p filtering as alternative to top-p
+- Critical for VoiceCraft stability
+
+**Parameters:**
+- `repetition_penalty`: Penalty for repeating tokens (>1.0 to discourage, default: 1.0)
+- `min_p`: Minimum probability threshold relative to max prob (default: 0.0)
+- Compatible with existing top-k and top-p sampling
+
+**Benefits:**
+- Dramatically reduces repetition issues
+- More natural prosody
+- Better quality control
+
+### 10. Special Speech Tokens ✨ **NEW**
+
+**What it does:**
+- Adds prosody control tokens to tokenizer
+- Enables natural non-verbal sounds
+
+**Tokens:**
+- `[breath]`: Breathing sound
+- `[noise]`: Background noise
+- `[laughter]`: Laughter
+- `[cough]`: Coughing
+- `[sigh]`: Sighing
+- `[pause]`: Pause marker
+
+**Benefits:**
+- More natural and expressive speech
+- Control over prosodic elements
+- Better emotional expression
+
 ## File Structure
 
 ```
 TTS/tts/
 ├── layers/xtts/
-│   ├── encodec_tokenizer.py       # EnCodec-style RVQ tokenizer (NEW)
-│   ├── delay_pattern.py           # Delay pattern mechanism (NEW)
-│   ├── token_reordering.py        # Token reordering strategy (NEW)
-│   ├── qwen3_backbone.py          # Qwen3 integration (NEW)
-│   ├── speaker_embedding.py       # Enhanced speaker encoder (NEW)
-│   └── voicecraft_x_loss.py       # Weighted loss function (NEW)
+│   ├── encodec_tokenizer.py       # EnCodec-style RVQ tokenizer
+│   ├── delay_pattern.py           # Delay pattern mechanism
+│   ├── token_reordering.py        # Token reordering strategy
+│   ├── qwen3_backbone.py          # Qwen3 integration + special tokens
+│   ├── speaker_embedding.py       # Enhanced speaker encoder
+│   ├── voicecraft_x_loss.py       # Weighted loss function
+│   ├── align_utils.py             # Alignment utilities (NEW)
+│   └── text_processor.py          # Text preprocessing pipeline (NEW)
 │
 └── models/
-    └── voicecraft_x.py            # Unified VoiceCraft-X model (NEW)
+    └── voicecraft_x.py            # Unified VoiceCraft-X model
 ```
 
 ## Usage Examples
@@ -195,12 +269,13 @@ model = VoiceCraftX(config)
 # Load prompt audio for voice cloning
 prompt_audio = torch.randn(16000 * 3)  # 3 seconds
 
-# Generate speech
+# Generate speech with repetition penalty
 output = model.inference_tts(
     text="Hello, this is a test of VoiceCraft-X!",
     prompt_audio=prompt_audio,
     temperature=1.0,
     top_k=20,
+    repetition_penalty=1.1,  # NEW: Reduce repetition
 )
 ```
 

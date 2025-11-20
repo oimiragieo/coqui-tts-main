@@ -276,6 +276,8 @@ class VoiceCraftX(nn.Module):
         temperature: float = 1.0,
         top_k: int = 20,
         top_p: float = 1.0,
+        min_p: float = 0.0,
+        repetition_penalty: float = 1.0,
     ) -> torch.Tensor:
         """Zero-shot TTS inference.
 
@@ -288,6 +290,8 @@ class VoiceCraftX(nn.Module):
             temperature: Sampling temperature
             top_k: Top-k sampling parameter
             top_p: Nucleus sampling parameter
+            min_p: Minimum probability threshold (alternative to top_p)
+            repetition_penalty: Penalty for repeating tokens (>1.0 to discourage)
 
         Returns:
             Generated audio waveform [T_audio]
@@ -353,6 +357,8 @@ class VoiceCraftX(nn.Module):
                 temperature=temperature,
                 top_k=top_k,
                 top_p=top_p,
+                min_p=min_p,
+                repetition_penalty=repetition_penalty,
             )
 
             # Decode to audio
@@ -373,6 +379,8 @@ class VoiceCraftX(nn.Module):
         temperature: float = 1.0,
         top_k: int = 20,
         top_p: float = 1.0,
+        min_p: float = 0.0,
+        repetition_penalty: float = 1.0,
     ) -> torch.Tensor:
         """Speech editing inference.
 
@@ -387,6 +395,8 @@ class VoiceCraftX(nn.Module):
             temperature: Sampling temperature
             top_k: Top-k sampling parameter
             top_p: Nucleus sampling parameter
+            min_p: Minimum probability threshold (alternative to top_p)
+            repetition_penalty: Penalty for repeating tokens (>1.0 to discourage)
 
         Returns:
             Edited audio waveform [T_audio] (seamless concatenation)
@@ -461,6 +471,8 @@ class VoiceCraftX(nn.Module):
                 temperature=temperature,
                 top_k=top_k,
                 top_p=top_p,
+                min_p=min_p,
+                repetition_penalty=repetition_penalty,
             )
 
             # Concatenate: prefix + generated_middle + suffix
