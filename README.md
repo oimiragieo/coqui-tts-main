@@ -43,6 +43,8 @@ ______________________________________________________________________
 
 ## 📋 Table of Contents
 
+- [💬 Where to Ask Questions](#-where-to-ask-questions)
+- [🔗 Links and Resources](#-links-and-resources)
 - [🚀 Getting Started](#-getting-started---step-by-step) - **Start here if you're new!**
 - [Installation](#installation)
 - [Model Implementations](#model-implementations)
@@ -97,11 +99,12 @@ Please use our dedicated channels for questions and discussion. Help is much mor
 
 | Type | Links |
 | ---- | ----- |
-| 💼 **Documentation** | [ReadTheDocs](https://tts.readthedocs.io/en/latest/) • [Quick Reference](docs/architecture/QUICK_REFERENCE.md) • [Architecture Overview](docs/architecture/ARCHITECTURAL_OVERVIEW.md) |
+| 🚀 **Getting Started** | [Getting Started Guide](docs/GETTING_STARTED.md) • [Quick Reference](docs/architecture/QUICK_REFERENCE.md) • [ReadTheDocs](https://tts.readthedocs.io/en/latest/) |
+| 💼 **Documentation** | [Documentation Index](docs/DOCUMENTATION_INDEX.md) • [Architecture Overview](docs/architecture/ARCHITECTURAL_OVERVIEW.md) • [TTS Package Guide](docs/development/TTS_PACKAGE_GUIDE.md) |
 | 📚 **Developer Guides** | [Contributing](CONTRIBUTING.md) • [Migration Guide](docs/development/MIGRATION_GUIDE.md) • [Modernization Roadmap](docs/development/MODERNIZATION_ROADMAP.md) |
 | 🚀 **Released Models** | [TTS Releases](https://github.com/coqui-ai/TTS/releases) • [Model Zoo](https://github.com/coqui-ai/TTS/wiki/Experimental-Released-Models) |
 | 📖 **Learning** | [Tutorial for Beginners](docs/source/tutorial_for_nervous_beginners.md) • [TTS Papers](https://github.com/erogol/TTS-papers) |
-| 🗺️ **Project** | [Roadmap](docs/development/MODERNIZATION_ROADMAP.md) • [Changelog](CHANGELOG.md) • [Documentation Index](docs/DOCUMENTATION_INDEX.md) |
+| 🗺️ **Project** | [Roadmap](docs/development/MODERNIZATION_ROADMAP.md) • [Governance](docs/GOVERNANCE.md) • [Changelog](CHANGELOG.md) |
 
 
 ## 🥇 TTS Performance
@@ -669,19 +672,22 @@ For detailed architecture information, see the [Architecture Overview](docs/arch
 ## 📚 Documentation & Resources
 
 ### For Users
-- **[Quick Start Guide](docs/architecture/QUICK_REFERENCE.md)** - Get started quickly
+- **[Getting Started Guide](docs/GETTING_STARTED.md)** ⭐ **Start here if you're new!**
+- **[Quick Reference](docs/architecture/QUICK_REFERENCE.md)** - Fast overview for developers
 - **[Installation Guide](https://tts.readthedocs.io/en/latest/installation.html)** - Detailed installation instructions
 - **[Model Documentation](https://tts.readthedocs.io/en/latest/)** - Model-specific guides
 - **[FAQ](docs/source/faq.md)** - Frequently asked questions
 
 ### For Developers
 - **[Contributing Guide](CONTRIBUTING.md)** - How to contribute
+- **[TTS Package Guide](docs/development/TTS_PACKAGE_GUIDE.md)** - API reference and workflows
 - **[Architecture Overview](docs/architecture/ARCHITECTURAL_OVERVIEW.md)** - Deep dive into codebase
 - **[Development Setup](CONTRIBUTING.md#development-setup)** - Set up your dev environment
 - **[Migration Guide](docs/development/MIGRATION_GUIDE.md)** - Upgrade to latest version
 
 ### For Maintainers
 - **[Modernization Roadmap](docs/development/MODERNIZATION_ROADMAP.md)** - Future improvements
+- **[Governance](docs/GOVERNANCE.md)** - Project governance and code ownership
 - **[Security Audit](docs/audit/EXECUTIVE_SUMMARY.md)** - Security assessment
 - **[Changelog](CHANGELOG.md)** - Version history
 
@@ -761,4 +767,8 @@ This project is licensed under the Mozilla Public License 2.0 (MPL-2.0). See [LI
 
 ---
 
+---
+
 **Last Updated**: November 20, 2025 | **Version**: 0.22.0+ | **Status**: Actively Maintained
+
+**New Documentation**: Check out our comprehensive [Getting Started Guide](docs/GETTING_STARTED.md) and [Documentation Index](docs/DOCUMENTATION_INDEX.md)!

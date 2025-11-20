@@ -18,6 +18,20 @@ All specialized documentation has been organized into the following directories:
 
 ## Documents Available
 
+### 0. docs/GETTING_STARTED.md ⭐ **NEW USER START HERE**
+**Best for**: New users getting started with Coqui TTS
+- Prerequisites and system requirements
+- Step-by-step installation guide
+- Quick start examples
+- Common use cases (voice cloning, multilingual, multi-speaker, etc.)
+- Model selection guide
+- Comprehensive troubleshooting
+- Next steps and resources
+
+**Start here if**: You're new to Coqui TTS and want to get running quickly
+
+---
+
 ### 1. docs/architecture/QUICK_REFERENCE.md (11 KB, 270 lines)
 **Best for**: Getting started quickly, refreshing architecture knowledge
 - What is Coqui TTS
@@ -78,15 +92,51 @@ All specialized documentation has been organized into the following directories:
 
 ---
 
+### 4. docs/development/TTS_PACKAGE_GUIDE.md ⭐ **NEW**
+**Best for**: Understanding the TTS package structure and APIs
+- Complete directory overview of TTS/ package
+- Most important files and their purposes
+- Public API reference (TTS.api)
+- Low-level inference engine (Synthesizer)
+- Flask REST API server
+- Common workflows and examples
+- Debugging guide
+- Known issues and performance tips
+
+**Start here if**: You're developing with the TTS package or need API reference
+
+---
+
+### 5. docs/GOVERNANCE.md ⭐ **NEW**
+**Best for**: Understanding project governance and code ownership
+- Module ownership system
+- Global owners and module owners
+- Areas of responsibility
+- How to become a module owner
+- Escalation process
+- Community guidelines
+
+**Start here if**: You want to contribute or understand project governance
+
+---
+
 ## Quick Navigation Guide
 
 ### By Role
 
+#### If you're a **New User** (just getting started):
+1. Start with **docs/GETTING_STARTED.md** (installation and first steps)
+2. Try the Quick Start examples
+3. Pick a use case that matches your needs
+4. Join [Discord](https://discord.gg/5eXr5seRrv) for help
+
 #### If you're a **New Developer**:
-1. Start with docs/architecture/QUICK_REFERENCE.md (overview)
-2. Read docs/architecture/ARCHITECTURAL_OVERVIEW.md sections 1-4 (directory structure + core architecture)
-3. Follow "Adding a New Model" guide in QUICK_REFERENCE.md
-4. Look at recipes/ljspeech/glow_tts/train_glowtts.py as example
+1. Start with docs/GETTING_STARTED.md (get running first)
+2. Read docs/architecture/QUICK_REFERENCE.md (overview)
+3. Read docs/architecture/ARCHITECTURAL_OVERVIEW.md sections 1-4 (directory structure + core architecture)
+4. Check docs/development/TTS_PACKAGE_GUIDE.md (API reference)
+5. Follow "Adding a New Model" guide in QUICK_REFERENCE.md
+6. Look at recipes/ljspeech/glow_tts/train_glowtts.py as example
 
 #### If you're an **ML Engineer** (training models):
 1. docs/architecture/QUICK_REFERENCE.md → Training Pipeline section
@@ -95,10 +145,11 @@ All specialized documentation has been organized into the following directories:
 4. docs/architecture/QUICK_REFERENCE.md → Performance Tips
 
 #### If you're a **DevOps/Infrastructure Engineer**:
-1. docs/architecture/QUICK_REFERENCE.md → Dependencies section
-2. docs/architecture/ARCHITECTURAL_OVERVIEW.md → Section 9 (testing), Section 12 (dependencies)
-3. Review .github/workflows/ for CI/CD setup
-4. Check setup.py and requirements.txt
+1. docs/GETTING_STARTED.md → Installation and Docker sections
+2. docs/architecture/QUICK_REFERENCE.md → Dependencies section
+3. docs/architecture/ARCHITECTURAL_OVERVIEW.md → Section 9 (testing), Section 12 (dependencies)
+4. Review .github/workflows/ for CI/CD setup
+5. Check setup.py and requirements.txt
 
 #### If you're **Planning Modernization**:
 1. docs/architecture/ARCHITECTURAL_OVERVIEW.md → Sections 14-15 (known issues, modernization)
@@ -107,10 +158,19 @@ All specialized documentation has been organized into the following directories:
 4. Review critical files list for impact analysis
 
 #### If you're **Adding Integration** (using Coqui in your app):
-1. docs/architecture/QUICK_REFERENCE.md → "Quick Usage Patterns" section
-2. docs/architecture/ARCHITECTURAL_OVERVIEW.md → Section 10 (integration points)
-3. docs/architecture/ARCHITECTURAL_OVERVIEW.md → Section 4 (API structure)
-4. Check examples in notebooks/
+1. docs/GETTING_STARTED.md → Common use cases and API examples
+2. docs/development/TTS_PACKAGE_GUIDE.md → API reference and workflows
+3. docs/architecture/QUICK_REFERENCE.md → "Quick Usage Patterns" section
+4. docs/architecture/ARCHITECTURAL_OVERVIEW.md → Section 10 (integration points)
+5. docs/architecture/ARCHITECTURAL_OVERVIEW.md → Section 4 (API structure)
+6. Check examples in notebooks/
+
+#### If you're **Contributing to the Project**:
+1. Read CONTRIBUTING.md (contribution guidelines)
+2. Check docs/GOVERNANCE.md (understand project structure)
+3. Review docs/development/MODERNIZATION_ROADMAP.md (current priorities)
+4. Follow docs/architecture/ARCHITECTURAL_OVERVIEW.md (understand codebase)
+5. Set up pre-commit hooks and run tests
 
 ---
 
@@ -297,8 +357,9 @@ When adding/updating documentation:
 - **Latest Feature**: VoiceCraft-X multilingual TTS and speech editing
 - **Python Support**: 3.9, 3.10, 3.11
 - **PyTorch**: 2.0+
-- **Total Documentation Pages**: 5 comprehensive guides + this index
-- **Total Lines**: 2500+ lines of documentation
+- **Total Documentation Pages**: 8 comprehensive guides + this index
+- **Total Lines**: 4500+ lines of documentation
+- **New in this update**: Getting Started guide, TTS Package Guide, Governance documentation
 
 ---
 
